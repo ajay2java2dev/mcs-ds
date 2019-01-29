@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>SortUtils.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Testing (Nov 12, 2018 8:51:53 PM)</a> &gt; <a href="../../index.html" class="el_group">Testing</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">Utils</a> &gt; <span class="el_source">SortUtils.java</span></div><h1>SortUtils.java</h1><pre class="source lang-java linenums">package Utils;
+
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * The class contains util methods
+ *
+ * @author Podshivalov Nikita (https://github.com/nikitap492)
+ *
+ **/
+<span class="fc" id="L12">public final class SortUtils {</span>
+
+
+    /**
+     * Helper method for swapping places in array
+     * @param array The array which elements we want to swap
+     * @param idx index of the first element
+     * @param idy index of the second element
+     */
+    public static boolean swap(int[] array, int idx, int idy){
+<span class="fc" id="L22">        int swap = array[idx];</span>
+<span class="fc" id="L23">        array[idx] = array[idy];</span>
+<span class="fc" id="L24">        array[idy] = swap;</span>
+<span class="fc" id="L25">        return true;</span>
+    }
+
+
+    /**
+     * This method checks if first element is less then the other element
+     * @param v first element
+     * @param w second element
+     * @return true if the first element is less then the second element
+     */
+    public static boolean less(Integer v, Integer w) {
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        return v.compareTo(w) &lt; 0;</span>
+    }
+
+
+    /**
+     * Just print list
+     * @param toPrint - a list which should be printed
+     */
+    public static void print(List&lt;?&gt; toPrint){
+<span class="fc" id="L45">        toPrint.stream()</span>
+<span class="fc" id="L46">                .map(Object::toString)</span>
+<span class="fc" id="L47">                .map(str -&gt; str + &quot; &quot;)</span>
+<span class="fc" id="L48">                .forEach(System.out::print);</span>
+
+<span class="fc" id="L50">        System.out.println();</span>
+<span class="fc" id="L51">    }</span>
+
+
+    /**
+     * Prints an array
+     * @param toPrint - the array  which should be printed
+     */
+    public static void print(int[] toPrint){
+<span class="fc" id="L59">        System.out.println(Arrays.toString(toPrint));</span>
+<span class="fc" id="L60">    }</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Testing (Nov 12, 2018 8:51:53 PM)</div></body></html>

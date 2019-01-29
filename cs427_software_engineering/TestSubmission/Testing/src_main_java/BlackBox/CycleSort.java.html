@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>CycleSort.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Testing (Nov 12, 2018 8:51:53 PM)</a> &gt; <a href="../../index.html" class="el_group">Testing</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">BlackBox</a> &gt; <span class="el_source">CycleSort.java</span></div><h1>CycleSort.java</h1><pre class="source lang-java linenums">package BlackBox;
+
+import static Utils.SortUtils.less;
+import static Utils.SortUtils.print;
+
+/**
+ *  @author Podshivalov Nikita (https://github.com/nikitap492)
+ */
+<span class="fc" id="L9">public class CycleSort implements SortAlgorithm {</span>
+
+
+    @Override
+    public int[] sort(int[] arr) {
+<span class="fc bfc" id="L14" title="All 2 branches covered.">        if(arr == null){</span>
+<span class="fc" id="L15">            return null;</span>
+        }
+
+<span class="fc" id="L18">        int n = arr.length;</span>
+
+        // traverse array elements
+<span class="fc bfc" id="L21" title="All 2 branches covered.">        for (int j = 0; j &lt;= n - 2; j++) {</span>
+            // initialize item as starting point
+<span class="fc" id="L23">            Integer item = arr[j];</span>
+
+            // Find position where we put the item.
+<span class="fc" id="L26">            int pos = j;</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">            for (int i = j + 1; i &lt; n; i++) {</span>
+<span class="fc bfc" id="L28" title="All 2 branches covered.">                if (less(arr[i], item)) {</span>
+<span class="fc" id="L29">                    pos++;</span>
+                }
+            }
+            // If item is already in correct position
+<span class="fc bfc" id="L33" title="All 2 branches covered.">            if (pos == j)  {</span>
+<span class="fc" id="L34">                continue;</span>
+            }
+
+            // ignore all duplicate elements
+<span class="fc bfc" id="L38" title="All 2 branches covered.">            while (item.compareTo(arr[pos]) == 0) {</span>
+<span class="fc" id="L39">                pos += 1;</span>
+            }
+
+            // put the item to it's right position
+<span class="pc bpc" id="L43" title="1 of 2 branches missed.">            if (pos != j) {</span>
+<span class="fc" id="L44">                item = replace(arr, pos, item);</span>
+            }
+
+            // Rotate rest of the cycle
+<span class="fc bfc" id="L48" title="All 2 branches covered.">            while (pos != j) {</span>
+<span class="fc" id="L49">                pos = j;</span>
+
+                // Find position where we put the element
+<span class="fc bfc" id="L52" title="All 2 branches covered.">                for (int i = j + 1; i &lt; n; i++) {</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">                    if (less(arr[i], item)) {</span>
+<span class="fc" id="L54">                        pos += 1;</span>
+                    }
+                }
+
+                // ignore all duplicate elements
+<span class="fc bfc" id="L59" title="All 2 branches covered.">                while (item.compareTo(arr[pos]) == 0) {</span>
+<span class="fc" id="L60">                    pos += 1;</span>
+                }
+
+                // put the item to it's right position
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">                if (item != arr[pos]) {</span>
+<span class="fc" id="L65">                    item = replace(arr, pos, item);</span>
+                }
+            }
+        }
+
+<span class="fc" id="L70">        return arr;</span>
+    }
+
+    private int replace(int[] arr, int pos, int item){
+<span class="fc" id="L74">        int temp = item;</span>
+<span class="fc" id="L75">        item = arr[pos];</span>
+<span class="fc" id="L76">        arr[pos] = temp;</span>
+<span class="fc" id="L77">        return item;</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Testing (Nov 12, 2018 8:51:53 PM)</div></body></html>

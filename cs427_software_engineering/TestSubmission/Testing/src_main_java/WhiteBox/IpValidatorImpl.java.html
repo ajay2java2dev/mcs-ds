@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>IpValidatorImpl.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Testing (Nov 12, 2018 8:51:53 PM)</a> &gt; <a href="../../index.html" class="el_group">Testing</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">WhiteBox</a> &gt; <span class="el_source">IpValidatorImpl.java</span></div><h1>IpValidatorImpl.java</h1><pre class="source lang-java linenums">package WhiteBox;
+
+<span class="fc" id="L3">public class IpValidatorImpl implements IpValidator{</span>
+    public String validIPAddress(String IP) {
+<span class="fc bfc" id="L5" title="All 2 branches covered.">        if(isValidIPv4(IP)) return &quot;IPv4&quot;;</span>
+<span class="fc bfc" id="L6" title="All 2 branches covered.">        else if(isValidIPv6(IP)) return &quot;IPv6&quot;;</span>
+<span class="fc" id="L7">        else return &quot;Neither&quot;;</span>
+    }
+
+    private boolean isValidIPv4(String ip) {
+<span class="fc bfc" id="L11" title="All 2 branches covered.">        if(ip.length()&lt;7) return false;</span>
+<span class="fc bfc" id="L12" title="All 2 branches covered.">        if(ip.charAt(0)=='.') return false;</span>
+<span class="fc bfc" id="L13" title="All 2 branches covered.">        if(ip.charAt(ip.length()-1)=='.') return false;</span>
+<span class="fc" id="L14">        String[] tokens = ip.split(&quot;\\.&quot;);</span>
+<span class="fc bfc" id="L15" title="All 2 branches covered.">        if(tokens.length!=4) return false;</span>
+<span class="fc bfc" id="L16" title="All 2 branches covered.">        for(String token:tokens) {</span>
+<span class="fc bfc" id="L17" title="All 2 branches covered.">            if(!isValidIPv4Token(token)) return false;</span>
+        }
+<span class="fc" id="L19">        return true;</span>
+    }
+    private boolean isValidIPv4Token(String token) {
+<span class="fc bfc" id="L22" title="All 4 branches covered.">        if(token.startsWith(&quot;0&quot;) &amp;&amp; token.length()&gt;1) return false;</span>
+        try {
+<span class="fc" id="L24">            int parsedInt = Integer.parseInt(token);</span>
+<span class="fc bfc" id="L25" title="All 4 branches covered.">            if(parsedInt&lt;0 || parsedInt&gt;255) return false;</span>
+<span class="fc bfc" id="L26" title="All 4 branches covered.">            if(parsedInt==0 &amp;&amp; token.charAt(0)!='0') return false;</span>
+<span class="fc" id="L27">        } catch(NumberFormatException nfe) {</span>
+<span class="fc" id="L28">            return false;</span>
+        }
+<span class="fc" id="L30">        return true;</span>
+    }
+
+    private boolean isValidIPv6(String ip) {
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        if(ip.length()&lt;15) return false;</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">        if(ip.charAt(0)==':') return false;</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        if(ip.charAt(ip.length()-1)==':') return false;</span>
+<span class="fc" id="L37">        String[] tokens = ip.split(&quot;:&quot;);</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        if(tokens.length!=8) return false;</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        for(String token: tokens) {</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">            if(!isValidIPv6Token(token)) return false;</span>
+        }
+<span class="fc" id="L42">        return true;</span>
+    }
+    private boolean isValidIPv6Token(String token) {
+<span class="fc bfc" id="L45" title="All 4 branches covered.">        if(token.length()&gt;4 || token.length()==0) return false;</span>
+<span class="fc" id="L46">        char[] chars = token.toCharArray();</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        for(char c:chars) {</span>
+<span class="fc bfc" id="L48" title="All 4 branches covered.">            boolean isDigit = c&gt;=48 &amp;&amp; c&lt;=57;</span>
+<span class="fc bfc" id="L49" title="All 4 branches covered.">            boolean isUppercaseAF = c&gt;=65 &amp;&amp; c&lt;=70;</span>
+<span class="fc bfc" id="L50" title="All 4 branches covered.">            boolean isLowerCaseAF = c&gt;=97 &amp;&amp; c&lt;=102;</span>
+<span class="fc bfc" id="L51" title="All 6 branches covered.">            if(!(isDigit || isUppercaseAF || isLowerCaseAF))</span>
+<span class="fc" id="L52">                return false;</span>
+        }
+<span class="fc" id="L54">        return true;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Testing (Nov 12, 2018 8:51:53 PM)</div></body></html>

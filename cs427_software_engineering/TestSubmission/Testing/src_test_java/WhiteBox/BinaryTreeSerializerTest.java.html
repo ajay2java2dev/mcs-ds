@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>BinaryTreeSerializerTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Testing (Nov 12, 2018 8:51:53 PM)</a> &gt; <a href="../../index.html" class="el_group">Testing</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">WhiteBox</a> &gt; <span class="el_source">BinaryTreeSerializerTest.java</span></div><h1>BinaryTreeSerializerTest.java</h1><pre class="source lang-java linenums">package WhiteBox;
+
+import Utils.TreeNode;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+
+<span class="fc" id="L9">public class BinaryTreeSerializerTest {</span>
+
+    @Test
+    public void serializeTestWithNull(){
+<span class="fc" id="L13">        BinaryTreeSerializer bs = new BinaryTreeSerializerImpl();</span>
+<span class="fc" id="L14">        TreeNode root = null;</span>
+<span class="fc" id="L15">        String ret = bs.serialize(root);</span>
+<span class="fc" id="L16">        assertEquals(&quot;[null]&quot;,ret);</span>
+
+<span class="fc" id="L18">        TreeNode root1= new TreeNode(0);</span>
+<span class="fc" id="L19">        String rootret1 = bs.serialize(root1);</span>
+<span class="fc" id="L20">        assertEquals(&quot;[0,null,null]&quot;,rootret1);</span>
+<span class="fc" id="L21">    }</span>
+
+    @Test
+    public void serializeTestJustRoot(){
+<span class="fc" id="L25">        BinaryTreeSerializer bs = new BinaryTreeSerializerImpl();</span>
+<span class="fc" id="L26">        TreeNode root = new TreeNode(0);</span>
+<span class="fc" id="L27">        root.left = null;</span>
+<span class="fc" id="L28">        root.right = new TreeNode(1);</span>
+<span class="fc" id="L29">        String ret = bs.serialize(root);</span>
+<span class="fc" id="L30">        assertEquals(&quot;[0,null,1,null,null]&quot;,ret);</span>
+<span class="fc" id="L31">    }</span>
+
+    @Test
+    public void serializeTestWithMoreNull(){
+<span class="fc" id="L35">        BinaryTreeSerializer bs = new BinaryTreeSerializerImpl();</span>
+<span class="fc" id="L36">        TreeNode root1= new TreeNode(0);</span>
+<span class="fc" id="L37">        String rootret1 = bs.serialize(root1);</span>
+<span class="fc" id="L38">        assertEquals(&quot;[0,null,null]&quot;,rootret1);</span>
+
+<span class="fc" id="L40">        root1= new TreeNode(2);</span>
+<span class="fc" id="L41">        root1.val = 5;</span>
+<span class="fc" id="L42">        root1.left =null;</span>
+<span class="fc" id="L43">        root1.right =null;</span>
+<span class="fc" id="L44">        rootret1 = bs.serialize(root1);</span>
+<span class="fc" id="L45">        assertEquals(&quot;[5,null,null]&quot;,rootret1);</span>
+
+<span class="fc" id="L47">        root1= new TreeNode(0);</span>
+<span class="fc" id="L48">        root1.val = +0;</span>
+<span class="fc" id="L49">        root1.left = new TreeNode(-4);</span>
+<span class="fc" id="L50">        root1.right = new TreeNode(+4);</span>
+<span class="fc" id="L51">        rootret1 = bs.serialize(root1);</span>
+<span class="fc" id="L52">        assertEquals(&quot;[0,-4,4,null,null,null,null]&quot;,rootret1);</span>
+
+<span class="fc" id="L54">    }</span>
+
+    @Test
+    public void serializeTestWithObject(){
+<span class="fc" id="L58">        BinaryTreeSerializer bs = new BinaryTreeSerializerImpl();</span>
+<span class="fc" id="L59">        TreeNode root = new TreeNode(5);</span>
+
+<span class="fc" id="L61">        root.left = new TreeNode(4);</span>
+<span class="fc" id="L62">        root.left.left = new TreeNode(3);</span>
+<span class="fc" id="L63">        root.left.right = new TreeNode(10);</span>
+
+<span class="fc" id="L65">        root.right = new TreeNode(7);</span>
+<span class="fc" id="L66">        root.right.left = new TreeNode(6);</span>
+<span class="fc" id="L67">        root.right.right = new TreeNode(8);</span>
+
+<span class="fc" id="L69">        String ret = bs.serialize(root);</span>
+<span class="fc" id="L70">        assertEquals(&quot;[5,4,7,3,10,6,8,null,null,null,null,null,null,null,null]&quot;,ret);</span>
+<span class="fc" id="L71">    }</span>
+
+    @Test
+    public void serializeTestWithNodeList(){
+<span class="fc" id="L75">        BinaryTreeSerializer bs = new BinaryTreeSerializerImpl();</span>
+<span class="fc" id="L76">        TreeNode root = new TreeNode(5);</span>
+
+<span class="fc" id="L78">        root.left = new TreeNode(4);</span>
+<span class="fc" id="L79">        root.left.left = new TreeNode(3);</span>
+<span class="fc" id="L80">        root.left.right = new TreeNode(10);</span>
+<span class="fc" id="L81">        root.left.right.right = null;</span>
+<span class="fc" id="L82">        root.left.right.left = null;</span>
+
+<span class="fc" id="L84">        root.right = new TreeNode(7);</span>
+<span class="fc" id="L85">        root.right.left = new TreeNode(6);</span>
+<span class="fc" id="L86">        root.right.right = new TreeNode(8);</span>
+
+<span class="fc" id="L88">        String ret = bs.serialize(root);</span>
+<span class="fc" id="L89">        assertEquals(&quot;[5,4,7,3,10,6,8,null,null,null,null,null,null,null,null]&quot;,ret);</span>
+<span class="fc" id="L90">    }</span>
+
+    @Test
+    public void serializeLevelForNull(){
+<span class="fc" id="L94">        BinaryTreeSerializer bs = new BinaryTreeSerializerImpl();</span>
+<span class="fc" id="L95">        TreeNode root = new TreeNode(5);</span>
+
+<span class="fc" id="L97">        root.left = new TreeNode(4);</span>
+<span class="fc" id="L98">        root.left.left = null;</span>
+<span class="fc" id="L99">        root.left.right = null;</span>
+
+<span class="fc" id="L101">        String ret = bs.serialize(root);</span>
+<span class="fc" id="L102">        assertEquals(&quot;[5,4,null,null,null]&quot;,ret);</span>
+<span class="fc" id="L103">    }</span>
+
+
+    @Test
+    public void serializeTestWithNegativeValues(){
+<span class="fc" id="L108">        BinaryTreeSerializer bs = new BinaryTreeSerializerImpl();</span>
+<span class="fc" id="L109">        TreeNode root = new TreeNode(-5);</span>
+
+<span class="fc" id="L111">        root.left = new TreeNode(-4);</span>
+<span class="fc" id="L112">        root.left.left = new TreeNode(-3);</span>
+<span class="fc" id="L113">        root.left.right = new TreeNode(-10);</span>
+
+<span class="fc" id="L115">        root.right = new TreeNode(-7);</span>
+<span class="fc" id="L116">        root.right.left = new TreeNode(-6);</span>
+<span class="fc" id="L117">        root.right.right = new TreeNode(-8);</span>
+<span class="fc" id="L118">        String ret = bs.serialize(root);</span>
+<span class="fc" id="L119">        assertEquals(&quot;[-5,-4,-7,-3,-10,-6,-8,null,null,null,null,null,null,null,null]&quot;,ret);</span>
+<span class="fc" id="L120">    }</span>
+
+    @Test
+    public void deserializeWithNullRoot(){
+<span class="fc" id="L124">        BinaryTreeSerializer bs = new BinaryTreeSerializerImpl();</span>
+<span class="fc" id="L125">        String s = &quot;[0,1,1,null,null,null,null]&quot;;</span>
+<span class="fc" id="L126">        String s1 = bs.serialize(bs.deserialize(s));</span>
+<span class="fc" id="L127">        assertEquals(s,s1);</span>
+<span class="fc" id="L128">    }</span>
+
+    @Test
+    public void deserializeWithAll(){
+<span class="fc" id="L132">        BinaryTreeSerializer bs = new BinaryTreeSerializerImpl();</span>
+<span class="fc" id="L133">        String s = &quot;[null]&quot;;</span>
+<span class="fc" id="L134">        TreeNode root = null;</span>
+<span class="fc" id="L135">        TreeNode rootret = bs.deserialize(s);</span>
+<span class="fc" id="L136">        assertEquals(root,rootret);</span>
+
+<span class="fc" id="L138">        String s1 = &quot;[]&quot;;</span>
+<span class="fc" id="L139">        TreeNode rootret1 = bs.deserialize(s1);</span>
+<span class="fc" id="L140">        assertEquals(root,rootret1);</span>
+
+<span class="fc" id="L142">        bs = new BinaryTreeSerializerImpl();</span>
+<span class="fc" id="L143">        s = &quot;[n,n,n,n]&quot;;</span>
+
+<span class="fc" id="L145">        root = new TreeNode(5);</span>
+
+<span class="fc" id="L147">        root.left = new TreeNode(4);</span>
+<span class="fc" id="L148">        root.left.left = new TreeNode(3);</span>
+<span class="fc" id="L149">        root.left.right = new TreeNode(10);</span>
+
+<span class="fc" id="L151">        root.right = new TreeNode(7);</span>
+<span class="fc" id="L152">        root.right.left = new TreeNode(6);</span>
+<span class="fc" id="L153">        root.right.right = new TreeNode(8);</span>
+
+<span class="fc" id="L155">        TreeNode treeNode = bs.deserialize(s);</span>
+<span class="fc" id="L156">        assertNotEquals(root,treeNode);</span>
+
+
+<span class="fc" id="L159">        bs = new BinaryTreeSerializerImpl();</span>
+<span class="fc" id="L160">        s = &quot;[5,null,null,1,2,3,4]&quot;;</span>
+<span class="fc" id="L161">        treeNode = bs.deserialize(s);</span>
+
+<span class="fc" id="L163">        root = new TreeNode(5);</span>
+<span class="fc" id="L164">        root.left = null;</span>
+<span class="fc" id="L165">        root.right = null;</span>
+        /*
+        root.right.right = new TreeNode(2);
+        root.right.right.left = new TreeNode(3);
+        root.right.right.left.right = new TreeNode(3);
+        root.right.right.left.left = new TreeNode(4);
+        */
+
+<span class="fc" id="L173">        assertEquals(root,treeNode);</span>
+<span class="fc" id="L174">        s1 = bs.serialize(root);</span>
+<span class="fc" id="L175">        assertEquals(&quot;[5,null,null]&quot;,s1);</span>
+
+<span class="fc" id="L177">        BinaryTreeSerializer bs1 = new BinaryTreeSerializerImpl();</span>
+<span class="fc" id="L178">        assertNotEquals(bs1.toString(),bs.toString());</span>
+<span class="fc" id="L179">        String s2 = &quot;[5,6,null,1,2,3,4,null,null,null,null,null,null,null,null]&quot;;</span>
+<span class="fc" id="L180">        TreeNode treeNode2 = bs1.deserialize(s2);</span>
+
+<span class="fc" id="L182">        TreeNode root2 = new TreeNode(5);</span>
+<span class="fc" id="L183">        root2.left = new TreeNode(6);</span>
+<span class="fc" id="L184">        root2.left.left = new TreeNode(1);</span>
+<span class="fc" id="L185">        root2.left.left.left = new TreeNode(3);</span>
+<span class="fc" id="L186">        root2.left.left.right = new TreeNode(4);</span>
+<span class="fc" id="L187">        root2.left.right = new TreeNode(2);</span>
+<span class="fc" id="L188">        root2.right = null;</span>
+<span class="fc" id="L189">        assertEquals(root2,treeNode2);</span>
+
+<span class="fc" id="L191">        BinaryTreeSerializer bs3 = new BinaryTreeSerializerImpl();</span>
+<span class="fc" id="L192">        String s3 = &quot;[5,null,7,1,2,3,4,null,null,null,null,null,null,null,null]&quot;;</span>
+
+<span class="fc" id="L194">        TreeNode treeNode3 = bs3.deserialize(s3);</span>
+
+<span class="fc" id="L196">        TreeNode root3 = new TreeNode(5);</span>
+<span class="fc" id="L197">        root3.left = null;</span>
+<span class="fc" id="L198">        root3.right = new TreeNode(7);</span>
+<span class="fc" id="L199">        root3.right.left = new TreeNode(1);</span>
+<span class="fc" id="L200">        root3.right.right = new TreeNode(2);</span>
+<span class="fc" id="L201">        root3.right.left.left = new TreeNode(3);</span>
+<span class="fc" id="L202">        root3.right.left.right = new TreeNode(4);</span>
+<span class="fc" id="L203">        assertEquals(root3,treeNode3);</span>
+<span class="fc" id="L204">    }</span>
+
+    @Test
+    public void deserializeWithNull(){
+<span class="fc" id="L208">        BinaryTreeSerializer bs = new BinaryTreeSerializerImpl();</span>
+<span class="fc" id="L209">        String s = &quot;[null]&quot;;</span>
+<span class="fc" id="L210">        TreeNode root = null;</span>
+<span class="fc" id="L211">        TreeNode rootret = bs.deserialize(s);</span>
+<span class="fc" id="L212">        assertEquals(root,rootret);</span>
+
+<span class="fc" id="L214">        String s1 = &quot;[]&quot;;</span>
+<span class="fc" id="L215">        TreeNode rootret1 = bs.deserialize(s1);</span>
+<span class="fc" id="L216">        assertEquals(root,rootret1);</span>
+<span class="fc" id="L217">    }</span>
+
+    @Test
+    public void deserializeWithEmpty(){
+<span class="fc" id="L221">        BinaryTreeSerializer bs = new BinaryTreeSerializerImpl();</span>
+<span class="fc" id="L222">        TreeNode root = null;</span>
+<span class="fc" id="L223">        String s1 = &quot;[]&quot;;</span>
+<span class="fc" id="L224">        TreeNode rootret1 = bs.deserialize(s1);</span>
+<span class="fc" id="L225">        assertEquals(root,rootret1);</span>
+<span class="fc" id="L226">    }</span>
+
+    @Test
+    public void deSerializeTestWithEmpty(){
+<span class="fc" id="L230">        BinaryTreeSerializer bs = new BinaryTreeSerializerImpl();</span>
+<span class="fc" id="L231">        String s = &quot;[n,n,n,n]&quot;;</span>
+
+<span class="fc" id="L233">        TreeNode root = new TreeNode(5);</span>
+
+<span class="fc" id="L235">        root.left = new TreeNode(4);</span>
+<span class="fc" id="L236">        root.left.left = new TreeNode(3);</span>
+<span class="fc" id="L237">        root.left.right = new TreeNode(10);</span>
+
+<span class="fc" id="L239">        root.right = new TreeNode(7);</span>
+<span class="fc" id="L240">        root.right.left = new TreeNode(6);</span>
+<span class="fc" id="L241">        root.right.right = new TreeNode(8);</span>
+
+<span class="fc" id="L243">        TreeNode treeNode = bs.deserialize(s);</span>
+<span class="fc" id="L244">        assertNotEquals(root,treeNode);</span>
+<span class="fc" id="L245">    }</span>
+
+    @Test
+    public void deSerializeTestWithNoPart(){
+<span class="fc" id="L249">        BinaryTreeSerializer bs = new BinaryTreeSerializerImpl();</span>
+<span class="fc" id="L250">        String s1 = &quot;[5,n,n,n]&quot;;</span>
+<span class="fc" id="L251">        String s2 = &quot;[5]&quot;;</span>
+<span class="fc" id="L252">        TreeNode root = new TreeNode(5);</span>
+
+<span class="fc" id="L254">        root.left = new TreeNode(4);</span>
+<span class="fc" id="L255">        root.left.left = new TreeNode(3);</span>
+<span class="fc" id="L256">        root.left.right = new TreeNode(10);</span>
+
+<span class="fc" id="L258">        root.right = new TreeNode(7);</span>
+<span class="fc" id="L259">        root.right.left = new TreeNode(6);</span>
+<span class="fc" id="L260">        root.right.right = new TreeNode(8);</span>
+
+<span class="fc" id="L262">        TreeNode treeNode1 = bs.deserialize(s1);</span>
+<span class="fc" id="L263">        assertNotEquals(root,treeNode1);</span>
+
+<span class="fc" id="L265">        TreeNode treeNode2 = bs.deserialize(s2);</span>
+<span class="fc" id="L266">        assertNotEquals(root,treeNode2);</span>
+<span class="fc" id="L267">    }</span>
+
+    @Test
+    public void deSerializeTestWithObject(){
+<span class="fc" id="L271">        BinaryTreeSerializer bs = new BinaryTreeSerializerImpl();</span>
+<span class="fc" id="L272">        String s = &quot;[5,4,7,3,10,6,8,null,null,null,null,null,null,null,null]&quot;;</span>
+
+<span class="fc" id="L274">        TreeNode root = new TreeNode(5);</span>
+
+<span class="fc" id="L276">        root.left = new TreeNode(4);</span>
+<span class="fc" id="L277">        root.left.left = new TreeNode(3);</span>
+<span class="fc" id="L278">        root.left.right = new TreeNode(10);</span>
+
+<span class="fc" id="L280">        root.right = new TreeNode(7);</span>
+<span class="fc" id="L281">        root.right.left = new TreeNode(6);</span>
+<span class="fc" id="L282">        root.right.right = new TreeNode(8);</span>
+
+<span class="fc" id="L284">        TreeNode treeNode = bs.deserialize(s);</span>
+<span class="fc" id="L285">        assertEquals(root,treeNode);</span>
+<span class="fc" id="L286">    }</span>
+
+    @Test
+    public void deSerializeTestWithNegative(){
+<span class="fc" id="L290">        BinaryTreeSerializer bs = new BinaryTreeSerializerImpl();</span>
+<span class="fc" id="L291">        String s = &quot;[-5,-4,-7,-3,-10,-6,-8,null,null,null,null,null,null,null,null]&quot;;</span>
+
+<span class="fc" id="L293">        TreeNode root = new TreeNode(-5);</span>
+
+<span class="fc" id="L295">        root.left = new TreeNode(-4);</span>
+<span class="fc" id="L296">        root.left.left = new TreeNode(-3);</span>
+<span class="fc" id="L297">        root.left.right = new TreeNode(-10);</span>
+
+<span class="fc" id="L299">        root.right = new TreeNode(-7);</span>
+<span class="fc" id="L300">        root.right.left = new TreeNode(-6);</span>
+<span class="fc" id="L301">        root.right.right = new TreeNode(-8);</span>
+
+<span class="fc" id="L303">        TreeNode treeNode = bs.deserialize(s);</span>
+<span class="fc" id="L304">        assertEquals(root,treeNode);</span>
+<span class="fc" id="L305">    }</span>
+
+    @Test
+    public void deSerializeTestWithNullInBetween(){
+<span class="fc" id="L309">        BinaryTreeSerializer bs = new BinaryTreeSerializerImpl();</span>
+<span class="fc" id="L310">        String s = &quot;[5,null,null,1,2,3,4]&quot;;</span>
+<span class="fc" id="L311">        TreeNode treeNode = bs.deserialize(s);</span>
+
+<span class="fc" id="L313">        TreeNode root = new TreeNode(5);</span>
+<span class="fc" id="L314">        root.left = null;</span>
+<span class="fc" id="L315">        root.right = null;</span>
+        /*
+        root.right.right = new TreeNode(2);
+        root.right.right.left = new TreeNode(3);
+        root.right.right.left.right = new TreeNode(3);
+        root.right.right.left.left = new TreeNode(4);
+        */
+
+<span class="fc" id="L323">        assertEquals(root,treeNode);</span>
+<span class="fc" id="L324">        String s1 = bs.serialize(root);</span>
+<span class="fc" id="L325">        assertEquals(&quot;[5,null,null]&quot;,s1);</span>
+
+<span class="fc" id="L327">        BinaryTreeSerializer bs1 = new BinaryTreeSerializerImpl();</span>
+<span class="fc" id="L328">        assertNotEquals(bs1.toString(),bs.toString());</span>
+<span class="fc" id="L329">        String s2 = &quot;[5,6,null,1,2,3,4,null,null,null,null,null,null,null,null]&quot;;</span>
+<span class="fc" id="L330">        TreeNode treeNode2 = bs1.deserialize(s2);</span>
+
+<span class="fc" id="L332">        TreeNode root2 = new TreeNode(5);</span>
+<span class="fc" id="L333">        root2.left = new TreeNode(6);</span>
+<span class="fc" id="L334">        root2.left.left = new TreeNode(1);</span>
+<span class="fc" id="L335">        root2.left.left.left = new TreeNode(3);</span>
+<span class="fc" id="L336">        root2.left.left.right = new TreeNode(4);</span>
+<span class="fc" id="L337">        root2.left.right = new TreeNode(2);</span>
+<span class="fc" id="L338">        root2.right = null;</span>
+<span class="fc" id="L339">        assertEquals(root2,treeNode2);</span>
+
+<span class="fc" id="L341">        BinaryTreeSerializer bs3 = new BinaryTreeSerializerImpl();</span>
+<span class="fc" id="L342">        String s3 = &quot;[5,null,7,1,2,3,4,null,null,null,null,null,null,null,null]&quot;;</span>
+
+<span class="fc" id="L344">        TreeNode treeNode3 = bs3.deserialize(s3);</span>
+
+<span class="fc" id="L346">        TreeNode root3 = new TreeNode(5);</span>
+<span class="fc" id="L347">        root3.left = null;</span>
+<span class="fc" id="L348">        root3.right = new TreeNode(7);</span>
+<span class="fc" id="L349">        root3.right.left = new TreeNode(1);</span>
+<span class="fc" id="L350">        root3.right.right = new TreeNode(2);</span>
+<span class="fc" id="L351">        root3.right.left.left = new TreeNode(3);</span>
+<span class="fc" id="L352">        root3.right.left.right = new TreeNode(4);</span>
+<span class="fc" id="L353">        assertEquals(root3,treeNode3);</span>
+
+
+<span class="fc" id="L356">    }</span>
+
+    @Test
+    public void compareTreeNodes () {
+<span class="fc" id="L360">        TreeNode root1 = new TreeNode(-5);</span>
+<span class="fc" id="L361">        root1.left = new TreeNode(-4);</span>
+<span class="fc" id="L362">        root1.left.left = new TreeNode(-3);</span>
+<span class="fc" id="L363">        root1.left.right = new TreeNode(-10);</span>
+<span class="fc" id="L364">        root1.right = new TreeNode(-7);</span>
+<span class="fc" id="L365">        root1.right.left = new TreeNode(-6);</span>
+<span class="fc" id="L366">        root1.right.right = new TreeNode(-8);</span>
+
+<span class="fc" id="L368">        TreeNode root2 = new TreeNode(-5);</span>
+<span class="fc" id="L369">        root2.left = new TreeNode(-4);</span>
+<span class="fc" id="L370">        root2.left.left = new TreeNode(-3);</span>
+<span class="fc" id="L371">        root2.left.right = new TreeNode(-10);</span>
+<span class="fc" id="L372">        root2.right = new TreeNode(-7);</span>
+<span class="fc" id="L373">        root2.right.left = new TreeNode(-6);</span>
+<span class="fc" id="L374">        root2.right.right = new TreeNode(-8);</span>
+
+<span class="fc" id="L376">        assertEquals(true,root1.equals(root2));</span>
+
+<span class="fc" id="L378">        TreeNode root3 = new TreeNode(1);</span>
+<span class="fc" id="L379">        TreeNode root4 = new TreeNode(1);</span>
+<span class="fc" id="L380">        root3.left = new TreeNode(3);</span>
+<span class="fc" id="L381">        root3.left.left = null;</span>
+<span class="fc" id="L382">        root3.right = new TreeNode(4);</span>
+<span class="fc" id="L383">        root4.left = new TreeNode(3);</span>
+<span class="fc" id="L384">        root4.right = new TreeNode(4);</span>
+<span class="fc" id="L385">        root4.left.left = null;</span>
+
+<span class="fc" id="L387">        assertEquals(root3.hashCode(),root4.hashCode());</span>
+<span class="fc" id="L388">        assertEquals(true,root3.equals(root3));</span>
+<span class="fc" id="L389">        assertEquals(true,root3.equals(root4));</span>
+<span class="fc" id="L390">        assertEquals(false,root3.equals(new Object()));</span>
+<span class="fc" id="L391">        assertEquals(false,root3.equals(null));</span>
+
+<span class="fc" id="L393">        TreeNode root5 = new TreeNode(1);</span>
+<span class="fc" id="L394">        TreeNode root6 = new TreeNode(1);</span>
+<span class="fc" id="L395">        root5.left = null;</span>
+<span class="fc" id="L396">        root6.left = null;</span>
+<span class="fc" id="L397">        root5.right = new TreeNode(1);</span>
+<span class="fc" id="L398">        root6.right = null;</span>
+<span class="fc" id="L399">        assertEquals(false,root5.equals(root6));</span>
+<span class="fc" id="L400">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Testing (Nov 12, 2018 8:51:53 PM)</div></body></html>

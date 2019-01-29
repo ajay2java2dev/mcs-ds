@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>SortAlgorithmBlackBoxTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Testing (Nov 12, 2018 8:51:53 PM)</a> &gt; <a href="../../index.html" class="el_group">Testing</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">BlackBox</a> &gt; <span class="el_source">SortAlgorithmBlackBoxTest.java</span></div><h1>SortAlgorithmBlackBoxTest.java</h1><pre class="source lang-java linenums">package BlackBox;
+
+import BlackBox.Setups.SortSetup;
+import Utils.SortUtils;
+
+import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.Collections;
+
+import static org.junit.Assert.assertArrayEquals;
+
+<span class="fc" id="L13">public class SortAlgorithmBlackBoxTest extends SortSetup {</span>
+
+    @Test
+    public void testArrayBoundaryValues() {
+<span class="fc" id="L17">        int maxVal = 9999; //Integer max values is making my JVM to crash</span>
+
+<span class="fc" id="L19">        int[] input = new int[maxVal];</span>
+<span class="fc" id="L20">        int[] expectedOut = new int[maxVal];</span>
+
+<span class="fc" id="L22">        int j = 0;</span>
+<span class="fc bfc" id="L23" title="All 2 branches covered.">        for (int i = maxVal-1; i &gt;= 0; i--) {</span>
+<span class="fc" id="L24">            input[j] = i;</span>
+<span class="fc" id="L25">            j++;</span>
+        }
+
+<span class="fc bfc" id="L28" title="All 2 branches covered.">        for (int j1 =0; j1 &lt; maxVal; j1++) {</span>
+<span class="fc" id="L29">            expectedOut[j1] = j1;</span>
+        }
+
+<span class="fc" id="L32">        sortAlgorithmPUT.run(input,expectedOut);</span>
+<span class="fc" id="L33">    }</span>
+
+    @Test
+    public void testWithSignedChars() {
+<span class="fc" id="L37">        int arr[] = {'a', 'b', 'a', 'b', 'a', 'b', 'a', 'b', 'a', 'b', 'a', 'b', 'a', 'b', 'a', 'b', 'a', 'b', 'a', 'b', 'a', 'b',</span>
+<span class="fc" id="L38">                '1', 99999, -1, -00222, 2222};</span>
+<span class="fc" id="L39">        int exp[] = {-00222, -1, '1', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b',</span>
+<span class="fc" id="L40">                2222, 99999};</span>
+<span class="fc" id="L41">        CycleSort sort = new CycleSort();</span>
+<span class="fc" id="L42">        sort.sort(arr);</span>
+<span class="fc" id="L43">        assertArrayEquals(exp, arr);</span>
+<span class="fc" id="L44">    }</span>
+
+    @Test
+    public void testWithEmptyArrs() {
+<span class="fc" id="L48">        int [] arr1 = new int[10];</span>
+<span class="fc" id="L49">        int [] arr2 = new int[10];</span>
+<span class="fc" id="L50">        CycleSort sort = new CycleSort();</span>
+<span class="fc" id="L51">        sort.sort(arr1);</span>
+<span class="fc" id="L52">        sort.sort(arr2);</span>
+<span class="fc" id="L53">        assertArrayEquals(arr1, arr2);</span>
+<span class="fc" id="L54">    }</span>
+
+    @Test
+    public void testWithRandomArrs() {
+<span class="fc" id="L58">        int size = 5000;</span>
+<span class="fc" id="L59">        CycleSort sort = new CycleSort();</span>
+<span class="fc" id="L60">        int a [] = new int[size];</span>
+<span class="fc" id="L61">        int b [] = new int[size];</span>
+
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        for (int i = 0; i &lt; size; i++) {</span>
+<span class="fc" id="L64">            int val = (int)(Math.random()*10);</span>
+<span class="fc" id="L65">            a [i] = val;</span>
+<span class="fc" id="L66">            b [i] = val;</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">            for (int j = 0; j &lt; i; j++) {</span>
+<span class="fc" id="L68">                int val1 = (int)(Math.random()*10);</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">                if (a[i] == a[j]) {</span>
+<span class="fc" id="L70">                    a[j] = val1; //What's this! Another random number!</span>
+                }
+<span class="fc bfc" id="L72" title="All 2 branches covered.">                if (b[i] == b[j]) {</span>
+<span class="fc" id="L73">                    b[j] = val1; //What's this! Another random number!</span>
+                }
+            }
+        }
+<span class="fc" id="L77">        Collections.shuffle(Arrays.asList(a));</span>
+<span class="fc" id="L78">        Collections.shuffle(Arrays.asList(b));</span>
+
+<span class="fc" id="L80">        sort.sort(a);</span>
+<span class="fc" id="L81">        sort.sort(b);</span>
+<span class="fc" id="L82">        assertArrayEquals(a, b);</span>
+<span class="fc" id="L83">    }</span>
+
+    @Test
+    public void testArrayNewBoundaryValues() {
+<span class="fc" id="L87">        int arr[] = {1, 8, 3, 9, 10, 10, 2, 4 };</span>
+<span class="fc" id="L88">        int exp[] = {1, 2, 3, 4, 8, 9, 10, 10  };</span>
+<span class="fc" id="L89">        int n = arr.length;</span>
+<span class="fc" id="L90">        CycleSort sort = new CycleSort();</span>
+<span class="fc" id="L91">        sort.sort(arr);</span>
+<span class="fc" id="L92">        assertArrayEquals(exp,arr);</span>
+        
+<span class="fc" id="L94">        int newarr[] = {1, 8, 3, 9, 10, 10, 2, 4 };</span>
+<span class="fc" id="L95">        SortUtils utils = new SortUtils();</span>
+<span class="fc" id="L96">        utils.swap(newarr, 1, 2);</span>
+<span class="fc" id="L97">        int swappedarr[] = {1, 3, 8, 9, 10, 10, 2, 4 };</span>
+<span class="fc" id="L98">        assertArrayEquals(swappedarr,newarr);</span>
+<span class="fc" id="L99">        utils.print(newarr);</span>
+<span class="fc" id="L100">        utils.print(Arrays.asList(newarr));</span>
+        
+<span class="fc" id="L102">    }</span>
+
+    @Test
+    public void testPositiveValues(){
+<span class="fc" id="L106">        int[] input = new int[]{2123,1221,'a','@','c',999999999};</span>
+<span class="fc" id="L107">        int[] expectedOutput = new int[]{'@','a','c',1221,2123,999999999};</span>
+<span class="fc" id="L108">        sortAlgorithmPUT.run(input,expectedOutput);</span>
+
+<span class="fc" id="L110">        int[] input1 = new int[]{1,2,3,4,5,6,7,'a','c','b'};</span>
+<span class="fc" id="L111">        int[] expectedOutput1 = new int[]{1,2,3,4,5,6,7,'a','b','c'};</span>
+<span class="fc" id="L112">        sortAlgorithmPUT.run(input1,expectedOutput1);</span>
+<span class="fc" id="L113">    }</span>
+
+    @Test
+    public void testArrayOfChars () {
+<span class="fc" id="L117">        int[] input = new int[]{'u','n','i','v','e','r','s','i','t','y','o','f','i','l','l','i','n','o','i','s'};</span>
+<span class="fc" id="L118">        int[] expectedOutput = new int[]{'e','f','i','i','i','i','i','l','l','n','n','o','o','r','s','s','t','u','v',</span>
+<span class="fc" id="L119">                'y'};</span>
+<span class="fc" id="L120">        sortAlgorithmPUT.run(input,expectedOutput);</span>
+<span class="fc" id="L121">    }</span>
+
+    @Test
+    public void testSpecialChars () {
+<span class="fc" id="L125">        int[] input = new int[]{'@','$','+'};</span>
+<span class="fc" id="L126">        int[] expectedOutput = new int[]{'$','+','@'};</span>
+<span class="fc" id="L127">        sortAlgorithmPUT.run(input,expectedOutput);</span>
+<span class="fc" id="L128">    }</span>
+
+    @Test
+    public void testSpecialVals () {
+<span class="fc" id="L132">        int[] input = new int[0];</span>
+<span class="fc" id="L133">        int[] expectedOutput = input;</span>
+<span class="fc" id="L134">        sortAlgorithmPUT.run(input,expectedOutput);</span>
+<span class="fc" id="L135">    }</span>
+
+    @Test
+    public void testSpecialValsInLoop () {
+<span class="fc bfc" id="L139" title="All 2 branches covered.">        for (int i = 0 ; i&lt; 5; i++) {</span>
+<span class="fc" id="L140">            int[] input = null;</span>
+<span class="fc" id="L141">            int[] expectedOutput=null;</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">            if (i &lt; 4) {</span>
+<span class="fc" id="L143">                input = new int[i];</span>
+<span class="fc" id="L144">                expectedOutput = input;</span>
+            }
+<span class="fc" id="L146">            sortAlgorithmPUT.run(input, expectedOutput);</span>
+        }
+
+<span class="fc" id="L149">    }</span>
+
+
+    @Test
+    public void testNegativeNumbers () {
+<span class="fc" id="L154">        int[] input = new int[]{-1,2,4,99999,-99999};</span>
+<span class="fc" id="L155">        int[] expectedOutput = new int[]{-99999,-1,2,4,99999};</span>
+<span class="fc" id="L156">        sortAlgorithmPUT.run(input,expectedOutput);</span>
+
+<span class="fc" id="L158">        int[] newInput = null;</span>
+<span class="fc" id="L159">        int[] newExpectedOutput = null;</span>
+<span class="fc" id="L160">        sortAlgorithmPUT.run(newInput,newExpectedOutput);</span>
+<span class="fc" id="L161">    }</span>
+
+    @Test
+    public void testMixedValues () {
+<span class="fc" id="L165">        int[] input = new int[]{-1,2,4,99999,-99999,'c','b','a'};</span>
+<span class="fc" id="L166">        int[] expectedOutput = new int[]{-99999,-1,2,4,'a','b','c',99999};</span>
+<span class="fc" id="L167">        sortAlgorithmPUT.run(input,expectedOutput);</span>
+<span class="fc" id="L168">    }</span>
+
+    @Test
+    public void testScenario () {
+<span class="fc" id="L172">        int[] input = new int[10];</span>
+<span class="fc" id="L173">        int[] expectedOutput = new int[10];</span>
+<span class="fc" id="L174">        sortAlgorithmPUT.run(input,expectedOutput);</span>
+
+<span class="fc" id="L176">        input = null;</span>
+<span class="fc" id="L177">        sortAlgorithmPUT.run(input,null);</span>
+<span class="fc" id="L178">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Testing (Nov 12, 2018 8:51:53 PM)</div></body></html>

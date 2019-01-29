@@ -1,0 +1,29 @@
+URL : http://localhost:8080/CoffeeMaker_Web_kamenon2/add_inventory.jsp
+User Story : 
+	Title: Add Inventory 
+	AccTest: addInventory 1 
+	Priority: 1 
+	Story Points: 2
+	
+Implementation details as below:
+
+1) The modified version of add_inventory consists of an enhanced page for adding the 4 items (coffee, sugar, milk & chocolate) in whole
+numbers only. There is no decimal number support & for the JSP throws an exception of 
+javax.servlet.ServletException: edu.ncsu.csc326.coffeemaker.exceptions.InventoryException: Units of coffee must be a positive integer.
+Exception handling is left for future enhancements.
+
+2) Instead of showing just a message, the page shows an updated quantity at the top of the section. There is no fancy javascripting
+for this and its a simple mechanism of returning the count once the method returns.
+
+3) Since reducing the quantity is part of Purchase Beverage section, there is no mechanism right now to reduce the quantity.
+Since the JSP takes only positive integers for now, as part of future enhancements, setting negative numbers shall reduce the quantity
+as part of settings corrections to the quantity.
+
+4) The page has been modified differently than what has been shared in the new release version mentioned in MP1. 
+(https://github-dev.cs.illinois.edu/cs427-fa18/release)
+
+As mentioned in the http://realsearchgroup.org/SEMaterials/tutorials/jsp/jsp_tutorial.html 
+& http://realsearchgroup.org/SEMaterials/tutorials/coffee_maker/ only story to "Add Inventory" is attempted here.
+Purchase beverage is not attempted as its mentioned as a seperate story.
+
+

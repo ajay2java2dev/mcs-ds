@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>LruCachePUT.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Testing (Nov 12, 2018 8:51:53 PM)</a> &gt; <a href="../../index.html" class="el_group">Testing</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">BlackBox.PUTs</a> &gt; <span class="el_source">LruCachePUT.java</span></div><h1>LruCachePUT.java</h1><pre class="source lang-java linenums">package BlackBox.PUTs;
+
+import BlackBox.LruCache;
+import BlackBox.LruCacheImpl;
+import Utils.LruCacheMethod;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+
+class CertainLruCache extends LruCacheImpl {
+    public CertainLruCache(int capacity){
+<span class="fc" id="L15">        super(capacity);</span>
+<span class="fc" id="L16">    }</span>
+};
+
+public class LruCachePUT{
+
+    public List&lt;LruCacheMethod&gt; lruMethodList;
+    public List&lt;int[]&gt; inputArgsList;
+    private LruCache lruCache;
+
+<span class="fc" id="L25">    public LruCachePUT() {</span>
+<span class="fc" id="L26">        this.lruMethodList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L27">        this.inputArgsList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L28">    }</span>
+
+    public void run(LruCacheMethod lruMethod, int[] inputArgs, Integer expectedOutput){
+
+<span class="fc" id="L32">        lruMethodList.add(lruMethod);</span>
+<span class="pc bpc" id="L33" title="1 of 2 branches missed.">        if(inputArgs != null){</span>
+<span class="fc" id="L34">            inputArgsList.add(inputArgs.clone());</span>
+<span class="fc" id="L35">        }else{</span>
+<span class="nc" id="L36">            inputArgsList.add(null);</span>
+        }
+<span class="fc" id="L38">        Integer output = null;</span>
+<span class="pc bpc" id="L39" title="1 of 4 branches missed.">        switch (lruMethod){</span>
+            case Get:
+<span class="fc" id="L41">                output = lruCache.get(inputArgs[0]);</span>
+<span class="fc" id="L42">                break;</span>
+            case Put:
+<span class="fc" id="L44">                lruCache.put(inputArgs[0],inputArgs[1]);</span>
+<span class="fc" id="L45">                break;</span>
+            case Constructor:
+<span class="fc" id="L47">                lruCache = new CertainLruCache(inputArgs[0]);</span>
+                break;
+        }
+<span class="fc" id="L50">        assertEquals(expectedOutput,output);</span>
+<span class="fc" id="L51">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Testing (Nov 12, 2018 8:51:53 PM)</div></body></html>

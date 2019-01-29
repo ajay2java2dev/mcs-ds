@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>LruCacheBlackBoxTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Testing (Nov 12, 2018 8:51:53 PM)</a> &gt; <a href="../../index.html" class="el_group">Testing</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">BlackBox</a> &gt; <span class="el_source">LruCacheBlackBoxTest.java</span></div><h1>LruCacheBlackBoxTest.java</h1><pre class="source lang-java linenums">package BlackBox;
+
+import BlackBox.Setups.LruCacheSetup;
+import Utils.LruCacheMethod;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+<span class="fc" id="L10">public class LruCacheBlackBoxTest extends LruCacheSetup {</span>
+
+    @Test
+    public void testPositiveRanges(){
+        //constructor size = 2
+<span class="fc" id="L15">        int[] functionParameters = new int[]{2};</span>
+<span class="fc" id="L16">        lruCachePUT.run(LruCacheMethod.Constructor,</span>
+<span class="fc" id="L17">                functionParameters,</span>
+<span class="fc" id="L18">                null);</span>
+
+        //put key=1, value = 2
+<span class="fc" id="L21">        int[] functionParameters2 = new int[]{1,2};</span>
+<span class="fc" id="L22">        lruCachePUT.run(LruCacheMethod.Put,</span>
+<span class="fc" id="L23">                functionParameters2,</span>
+<span class="fc" id="L24">                null);</span>
+
+        //put key=1, value = 2
+<span class="fc" id="L27">        int[] functionParameters3 = new int[]{2,1};</span>
+<span class="fc" id="L28">        lruCachePUT.run(LruCacheMethod.Put,</span>
+<span class="fc" id="L29">                functionParameters3,</span>
+<span class="fc" id="L30">                null);</span>
+
+<span class="fc" id="L32">        lruCachePUT.run(LruCacheMethod.Get,</span>
+<span class="fc" id="L33">                functionParameters3,</span>
+<span class="fc" id="L34">                1);</span>
+
+<span class="fc" id="L36">        int[] functionParameters4 = new int[]{3,1};</span>
+<span class="fc" id="L37">        lruCachePUT.run(LruCacheMethod.Put,</span>
+<span class="fc" id="L38">                functionParameters4,</span>
+<span class="fc" id="L39">                null);</span>
+<span class="fc" id="L40">        lruCachePUT.run(LruCacheMethod.Put,</span>
+<span class="fc" id="L41">                functionParameters3,</span>
+<span class="fc" id="L42">                null);</span>
+<span class="fc" id="L43">        lruCachePUT.run(LruCacheMethod.Put,</span>
+<span class="fc" id="L44">                functionParameters2,</span>
+<span class="fc" id="L45">                null);</span>
+<span class="fc" id="L46">    }</span>
+
+    @Test
+    public void testPositiveValues(){
+        //constructor size = 2
+<span class="fc" id="L51">        int[] functionParameters = new int[]{2};</span>
+<span class="fc" id="L52">        lruCachePUT.run(LruCacheMethod.Constructor,</span>
+<span class="fc" id="L53">                functionParameters,</span>
+<span class="fc" id="L54">                null);</span>
+
+        //put key=1, value = 2
+<span class="fc" id="L57">        int[] functionParameters2 = new int[]{1,2};</span>
+<span class="fc" id="L58">        lruCachePUT.run(LruCacheMethod.Put,</span>
+<span class="fc" id="L59">                functionParameters2,</span>
+<span class="fc" id="L60">                null);</span>
+
+        //get key = 1
+<span class="fc" id="L63">        int[] functionParameters3 = new int[]{1};</span>
+<span class="fc" id="L64">        lruCachePUT.run(LruCacheMethod.Get,</span>
+<span class="fc" id="L65">                functionParameters3,</span>
+<span class="fc" id="L66">                2);</span>
+<span class="fc" id="L67">    }</span>
+
+    @Test
+    public void testLargeNumbers(){
+        //constructor size = 2
+<span class="fc" id="L72">        int[] functionParameters = new int[]{2};</span>
+<span class="fc" id="L73">        lruCachePUT.run(LruCacheMethod.Constructor,</span>
+<span class="fc" id="L74">                functionParameters,</span>
+<span class="fc" id="L75">                null);</span>
+
+        //put key=1, value = 2
+<span class="fc" id="L78">        int[] functionParameters2 = new int[]{1,123321,2,0,3,121212,4,1231213,5,121212};</span>
+<span class="fc" id="L79">        lruCachePUT.run(LruCacheMethod.Put,</span>
+<span class="fc" id="L80">                functionParameters2,</span>
+<span class="fc" id="L81">                null);</span>
+
+        //get key = 1
+<span class="fc" id="L84">        int[] functionParameters3 = new int[]{1};</span>
+<span class="fc" id="L85">        lruCachePUT.run(LruCacheMethod.Get,</span>
+<span class="fc" id="L86">                functionParameters3,123321</span>
+                );
+
+<span class="fc" id="L89">        int[] functionParameters4 = new int[]{1,123321,2,0,3,121212,4,1231213,5,121212};</span>
+<span class="fc" id="L90">        lruCachePUT.run(LruCacheMethod.Put,</span>
+<span class="fc" id="L91">                functionParameters4,</span>
+<span class="fc" id="L92">                null);</span>
+
+<span class="fc" id="L94">        int[] functionParameters5 = new int[]{1};</span>
+<span class="fc" id="L95">        lruCachePUT.run(LruCacheMethod.Get,</span>
+<span class="fc" id="L96">                functionParameters5,123321</span>
+        );
+<span class="fc" id="L98">    }</span>
+
+    @Test
+    public void testNullRuns(){
+<span class="fc" id="L102">        int[] functionParameters = new int[]{-1,1};</span>
+<span class="fc" id="L103">        lruCachePUT.run(LruCacheMethod.valueOf(&quot;Constructor&quot;),</span>
+<span class="fc" id="L104">                functionParameters,null</span>
+        );
+
+<span class="fc" id="L107">        lruCachePUT.run(LruCacheMethod.valueOf(&quot;Get&quot;),</span>
+<span class="fc" id="L108">                functionParameters,-1</span>
+        );
+
+<span class="fc" id="L111">        int[] functionParameters5 = new int[]{5,1000};</span>
+<span class="fc" id="L112">        lruCachePUT.run(LruCacheMethod.valueOf(&quot;Put&quot;),</span>
+<span class="fc" id="L113">                functionParameters5,null</span>
+        );
+
+<span class="fc" id="L116">        int[] key = new int[]{5};</span>
+<span class="fc" id="L117">        lruCachePUT.run(LruCacheMethod.valueOf(&quot;Get&quot;),</span>
+<span class="fc" id="L118">                key,1000</span>
+        );
+
+<span class="fc" id="L121">    }</span>
+
+    @Test
+    public void testNullRunsWithEnumTypes(){
+<span class="fc" id="L125">        int[] functionParameters = new int[]{-999999,999999};</span>
+<span class="fc" id="L126">        lruCachePUT.run(LruCacheMethod.valueOf(&quot;Constructor&quot;),</span>
+<span class="fc" id="L127">                functionParameters,null</span>
+        );
+
+<span class="fc" id="L130">        lruCachePUT.run(LruCacheMethod.valueOf(&quot;Get&quot;),</span>
+<span class="fc" id="L131">                functionParameters,-1</span>
+        );
+
+<span class="fc" id="L134">        int[] functionParameters5 = new int[]{5,1000};</span>
+<span class="fc" id="L135">        lruCachePUT.run(LruCacheMethod.valueOf(&quot;Put&quot;),</span>
+<span class="fc" id="L136">                functionParameters5,null</span>
+        );
+
+<span class="fc" id="L139">        int[] key = new int[]{5};</span>
+<span class="fc" id="L140">        lruCachePUT.run(LruCacheMethod.valueOf(&quot;Get&quot;),</span>
+<span class="fc" id="L141">                key,1000</span>
+        );
+
+<span class="fc" id="L144">    }</span>
+
+    @Test
+    public void testLruNodes () {
+
+        //constructor size = 2
+<span class="fc" id="L150">        int[] functionParameters = new int[]{1};</span>
+<span class="fc" id="L151">        lruCachePUT.run(LruCacheMethod.Constructor,</span>
+<span class="fc" id="L152">                functionParameters,</span>
+<span class="fc" id="L153">                null);</span>
+
+<span class="fc" id="L155">        int[] functionParameters2 = new int[]{1,123321,2,123123,3,121212,4,1231213,5,121212};</span>
+<span class="fc" id="L156">        lruCachePUT.run(LruCacheMethod.Put,</span>
+<span class="fc" id="L157">                functionParameters2,</span>
+<span class="fc" id="L158">                null);</span>
+
+<span class="fc" id="L160">        int[] functionParameters3 = new int[]{1,123321,2,123321,3,123321,4,1231213,5,121212};</span>
+<span class="fc" id="L161">        lruCachePUT.run(LruCacheMethod.Put,</span>
+<span class="fc" id="L162">                functionParameters3,</span>
+<span class="fc" id="L163">                null);</span>
+
+        //get key = 1
+<span class="fc" id="L166">        int[] functionParameters4 = new int[]{3};</span>
+<span class="fc" id="L167">        lruCachePUT.run(LruCacheMethod.Get,</span>
+<span class="fc" id="L168">                functionParameters3,123321</span>
+        );
+<span class="fc" id="L170">    }</span>
+
+    @Test
+    public void testLruNegativeNodes () {
+<span class="fc" id="L174">        int[] functionParameters = new int[]{'c'};</span>
+<span class="fc" id="L175">        lruCachePUT.run(LruCacheMethod.Constructor,</span>
+<span class="fc" id="L176">                functionParameters,</span>
+<span class="fc" id="L177">                null);</span>
+
+<span class="fc" id="L179">        int[] functionParameters2 = new int[]{1,'c'};</span>
+<span class="fc" id="L180">        lruCachePUT.run(LruCacheMethod.Put,</span>
+<span class="fc" id="L181">                functionParameters2,</span>
+<span class="fc" id="L182">                null);</span>
+
+<span class="fc" id="L184">        int[] functionParameters3 = new int[]{1};</span>
+<span class="fc" id="L185">        lruCachePUT.run(LruCacheMethod.Get,</span>
+<span class="fc" id="L186">                functionParameters3,99</span>
+        );
+
+        //also
+<span class="fc" id="L190">        functionParameters = new int[]{2,1};</span>
+<span class="fc" id="L191">        lruCachePUT.run(LruCacheMethod.Constructor,</span>
+<span class="fc" id="L192">                functionParameters,</span>
+<span class="fc" id="L193">                null);</span>
+
+<span class="fc" id="L195">        functionParameters2 = new int[]{1,2};</span>
+<span class="fc" id="L196">        lruCachePUT.run(LruCacheMethod.Put,</span>
+<span class="fc" id="L197">                functionParameters2,</span>
+<span class="fc" id="L198">                null);</span>
+<span class="fc" id="L199">    }</span>
+
+
+    @Test
+    public void testLruCacheMethods () {
+<span class="fc" id="L204">        int[] functionParameters = new int[]{'1'};</span>
+<span class="fc" id="L205">        lruCachePUT.run(LruCacheMethod.values()[0],functionParameters,null);</span>
+<span class="fc" id="L206">        int[] newFuncParams = new int[]{2,3};</span>
+<span class="fc" id="L207">        lruCachePUT.run(LruCacheMethod.values()[2],newFuncParams,null);</span>
+<span class="fc" id="L208">        lruCachePUT.run(LruCacheMethod.values()[2],newFuncParams,null);</span>
+<span class="fc" id="L209">        lruCachePUT.run(LruCacheMethod.values()[2],newFuncParams,null);</span>
+<span class="fc" id="L210">        lruCachePUT.run(LruCacheMethod.values()[2],newFuncParams,null);</span>
+<span class="fc" id="L211">        lruCachePUT.run(LruCacheMethod.values()[2],newFuncParams,null);</span>
+<span class="fc" id="L212">        lruCachePUT.run(LruCacheMethod.values()[2],newFuncParams,null);</span>
+<span class="fc" id="L213">        lruCachePUT.run(LruCacheMethod.values()[2],newFuncParams,null);</span>
+<span class="fc" id="L214">        lruCachePUT.run(LruCacheMethod.values()[2],newFuncParams,null);</span>
+
+<span class="fc" id="L216">        lruCachePUT.run(LruCacheMethod.values()[1],newFuncParams,3);</span>
+<span class="fc" id="L217">        lruCachePUT.run(LruCacheMethod.values()[1],newFuncParams,3);</span>
+<span class="fc" id="L218">        lruCachePUT.run(LruCacheMethod.values()[1],newFuncParams,3);</span>
+
+<span class="fc" id="L220">        int[] functionParameters2 = new int[]{100};</span>
+<span class="fc" id="L221">        lruCachePUT.run(LruCacheMethod.Constructor,functionParameters2,null);</span>
+<span class="fc" id="L222">        lruCachePUT.run(LruCacheMethod.Put,new int[]{2323,1212,12,12,13,1111,2222222,3333,2121,1212</span>
+<span class="fc" id="L223">        ,321,2323,123123,123123,123123,321,321,321,312},null);</span>
+<span class="fc" id="L224">        lruCachePUT.run(LruCacheMethod.Put,new int[]{2323,1212,12,12,13,1111,2222222,3333,2121,1212</span>
+<span class="fc" id="L225">                ,321,2323,123123,123123,123123,321,321,321,312},null);</span>
+<span class="fc" id="L226">        lruCachePUT.run(LruCacheMethod.Put,new int[]{2323,1212,12,12,13,1111,2222222,3333,2121,1212</span>
+<span class="fc" id="L227">                ,321,2323,123123,123123,123123,321,321,321,312},null);</span>
+<span class="fc" id="L228">        lruCachePUT.run(LruCacheMethod.Put,new int[]{-2323,-1212,-12,-12,-13,-1111,-2222222,-3333,-2121,-1212</span>
+<span class="fc" id="L229">                ,-321,-2323,-123123,-123123,-123123,-321,-321,-321,-312},null);</span>
+
+<span class="fc" id="L231">        int[] functionParameters3 = new int[]{1};</span>
+<span class="fc" id="L232">        lruCachePUT.run(LruCacheMethod.Get,functionParameters3,-1);</span>
+<span class="fc" id="L233">    }</span>
+
+
+    @Test
+    public void testLruPushMethods () {
+<span class="fc" id="L238">        int[] functionParameters = new int[]{'1'};</span>
+<span class="fc" id="L239">        lruCachePUT.run(LruCacheMethod.values()[0],functionParameters,null);</span>
+
+<span class="fc" id="L241">        int[] newFuncParams = new int[]{2,3,22,22,22};</span>
+<span class="fc" id="L242">        lruCachePUT.run(LruCacheMethod.values()[2],newFuncParams,null);</span>
+<span class="fc" id="L243">        lruCachePUT.run(LruCacheMethod.values()[2],newFuncParams,null);</span>
+<span class="fc" id="L244">        lruCachePUT.run(LruCacheMethod.values()[2],newFuncParams,null);</span>
+<span class="fc" id="L245">        lruCachePUT.run(LruCacheMethod.values()[2],newFuncParams,null);</span>
+<span class="fc" id="L246">        lruCachePUT.run(LruCacheMethod.values()[2],newFuncParams,null);</span>
+<span class="fc" id="L247">        lruCachePUT.run(LruCacheMethod.values()[2],newFuncParams,null);</span>
+<span class="fc" id="L248">        lruCachePUT.run(LruCacheMethod.values()[2],newFuncParams,null);</span>
+<span class="fc" id="L249">        lruCachePUT.run(LruCacheMethod.values()[2],newFuncParams,null);</span>
+
+<span class="fc" id="L251">        lruCachePUT.run(LruCacheMethod.values()[1],newFuncParams,3);</span>
+<span class="fc" id="L252">        lruCachePUT.run(LruCacheMethod.values()[1],newFuncParams,3);</span>
+<span class="fc" id="L253">        lruCachePUT.run(LruCacheMethod.values()[1],newFuncParams,3);</span>
+
+<span class="fc" id="L255">        int[] functionParameters2 = new int[]{100};</span>
+<span class="fc" id="L256">        lruCachePUT.run(LruCacheMethod.Constructor,functionParameters2,null);</span>
+<span class="fc" id="L257">        lruCachePUT.run(LruCacheMethod.Put,new int[]{2323,1212,12,12,13,1111,2222222,3333,2121,1212</span>
+<span class="fc" id="L258">                ,321,2323,123123,123123,123123,321,321,321,312},null);</span>
+<span class="fc" id="L259">        lruCachePUT.run(LruCacheMethod.Put,new int[]{2323,1212,12,12,13,1111,2222222,3333,2121,1212</span>
+<span class="fc" id="L260">                ,321,2323,123123,123123,123123,321,321,321,312},null);</span>
+<span class="fc" id="L261">        lruCachePUT.run(LruCacheMethod.Put,new int[]{2323,1212,12,12,13,1111,2222222,3333,2121,1212</span>
+<span class="fc" id="L262">                ,321,2323,123123,123123,123123,321,321,321,312},null);</span>
+<span class="fc" id="L263">        lruCachePUT.run(LruCacheMethod.Put,new int[]{-2323,-1212,-12,-12,-13,-1111,-2222222,-3333,-2121,-1212</span>
+<span class="fc" id="L264">                ,-321,-2323,-123123,-123123,-123123,-321,-321,-321,-312},null);</span>
+
+<span class="fc" id="L266">        int[] functionParameters3 = new int[]{1};</span>
+<span class="fc" id="L267">        lruCachePUT.run(LruCacheMethod.Get,functionParameters3,-1);</span>
+<span class="fc" id="L268">    }</span>
+
+
+    @Test
+    public void testNegativeArrayCache () {
+
+<span class="fc" id="L274">        List&lt;LruCacheMethod&gt; lruMethodList = new ArrayList&lt;LruCacheMethod&gt;();</span>
+<span class="fc" id="L275">        lruMethodList.add(LruCacheMethod.Get);</span>
+<span class="fc" id="L276">        lruMethodList.add(LruCacheMethod.Put);</span>
+<span class="fc" id="L277">        lruMethodList.add(LruCacheMethod.Put);</span>
+<span class="fc" id="L278">        lruCachePUT.lruMethodList = lruMethodList;</span>
+
+<span class="fc" id="L280">        lruCachePUT.inputArgsList = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L282">        int[] functionParameters = new int[]{'1'};</span>
+<span class="fc" id="L283">        lruCachePUT.run(LruCacheMethod.values()[0],functionParameters,null);</span>
+
+<span class="fc" id="L285">        lruCachePUT.run(LruCacheMethod.Put,new int[]{9999,111},null);</span>
+
+<span class="fc" id="L287">        int[] functionParameters3 = new int[]{1};</span>
+<span class="fc" id="L288">        lruCachePUT.run(LruCacheMethod.Get,functionParameters3,-1);</span>
+
+<span class="fc" id="L290">        lruCachePUT.run(LruCacheMethod.Get,functionParameters3,-1);</span>
+<span class="fc" id="L291">    }</span>
+
+    @Test
+    public void testExceptions () {
+
+<span class="fc" id="L296">        List&lt;LruCacheMethod&gt; lruMethodList = new ArrayList&lt;LruCacheMethod&gt;();</span>
+<span class="fc" id="L297">        lruMethodList.add(LruCacheMethod.Get);</span>
+<span class="fc" id="L298">        lruCachePUT.lruMethodList = lruMethodList;</span>
+
+<span class="fc" id="L300">        lruCachePUT.inputArgsList = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L302">        int[] functionParameters = new int[]{'1'};</span>
+<span class="fc" id="L303">        lruCachePUT.run(LruCacheMethod.values()[0],functionParameters,null);</span>
+
+<span class="fc" id="L305">        lruCachePUT.run(LruCacheMethod.Put,new int[]{'#',111,123},null);</span>
+
+<span class="fc" id="L307">        int[] functionParameters3 = new int[]{1};</span>
+<span class="fc" id="L308">        lruCachePUT.run(LruCacheMethod.Get,functionParameters3,-1);</span>
+
+<span class="fc" id="L310">        lruCachePUT.run(LruCacheMethod.Get,functionParameters3,-1);</span>
+<span class="fc" id="L311">    }</span>
+
+    @Test
+    public void testAlternateFlows () {
+
+<span class="fc" id="L316">        List&lt;LruCacheMethod&gt; lruMethodList = new ArrayList&lt;LruCacheMethod&gt;();</span>
+<span class="fc" id="L317">        lruMethodList.add(LruCacheMethod.Get);</span>
+<span class="fc" id="L318">        lruCachePUT.lruMethodList = lruMethodList;</span>
+<span class="fc" id="L319">        lruCachePUT.inputArgsList = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L321">        int[] functionParameters = new int[]{'1'};</span>
+<span class="fc" id="L322">        lruCachePUT.run(LruCacheMethod.values()[0],functionParameters,null);</span>
+
+<span class="fc" id="L324">        lruCachePUT.run(LruCacheMethod.Put,new int[]{'#',111,123},null);</span>
+        try {
+<span class="fc" id="L326">            LruCacheMethod instance = LruCacheMethod.Get;</span>
+<span class="fc" id="L327">            lruCachePUT.inputArgsList = new ArrayList&lt;int[]&gt;();</span>
+
+<span class="fc" id="L329">            int[] functionParameters3 = new int[]{1};</span>
+<span class="fc" id="L330">            lruCachePUT.run(instance,functionParameters3,-1);</span>
+
+<span class="fc" id="L332">            lruCachePUT.run(LruCacheMethod.Get,functionParameters3,-1);</span>
+<span class="pc" id="L333">        } catch (Exception ex) {</span>
+<span class="nc" id="L334">            ex.printStackTrace();</span>
+        }
+
+<span class="fc" id="L337">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Testing (Nov 12, 2018 8:51:53 PM)</div></body></html>

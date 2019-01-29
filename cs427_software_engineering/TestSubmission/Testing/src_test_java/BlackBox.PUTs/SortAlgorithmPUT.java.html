@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>SortAlgorithmPUT.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Testing (Nov 12, 2018 8:51:53 PM)</a> &gt; <a href="../../index.html" class="el_group">Testing</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">BlackBox.PUTs</a> &gt; <span class="el_source">SortAlgorithmPUT.java</span></div><h1>SortAlgorithmPUT.java</h1><pre class="source lang-java linenums">package BlackBox.PUTs;
+
+import BlackBox.SortAlgorithm;
+import static org.junit.Assert.assertArrayEquals;
+import BlackBox.CycleSort;
+
+import java.util.ArrayList;
+import java.util.List;
+
+<span class="fc" id="L10">class CertainSortAlgorithm extends CycleSort{};</span>
+
+public class SortAlgorithmPUT{
+
+    public List&lt;int[]&gt; inputs;
+
+<span class="fc" id="L16">    public SortAlgorithmPUT() {</span>
+<span class="fc" id="L17">        this.inputs = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L19">    }</span>
+
+    public void run(int[] input, int[] expectedOutput){
+<span class="fc bfc" id="L22" title="All 2 branches covered.">        if(input == null){</span>
+<span class="fc" id="L23">            inputs.add(null);</span>
+<span class="fc" id="L24">        }else {</span>
+<span class="fc" id="L25">            inputs.add(input.clone());</span>
+        }
+<span class="fc" id="L27">        SortAlgorithm sa = new CertainSortAlgorithm();</span>
+<span class="fc" id="L28">        assertArrayEquals(expectedOutput,sa.sort(input));</span>
+<span class="fc" id="L29">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Testing (Nov 12, 2018 8:51:53 PM)</div></body></html>
