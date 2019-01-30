@@ -170,5 +170,6 @@ if __name__ == "__main__":
     xTest = np.array(tst_images)
     yTest = np.array(tst_labels)
     
-    callNaiveBaiseBernoulliMultinomialClassficiation(xTrain,yTrain,xTest,yTest)
     callNaiveBaiseGaussianClassficiation(xTrain,yTrain,xTest,yTest)
+    callNaiveBaiseBernoulliMultinomialClassficiation(xTrain,yTrain,xTest,yTest)
+    
